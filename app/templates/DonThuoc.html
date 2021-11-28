@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Đơn Thuốc</title>
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="{{ url_for('static', filename='javascrip/add.js') }}"></script>
+    <script>
+        var dem=1;
+        var row=range(0,dem);
+    </script>
+
+</head>
+<body style="background-image:url('static/images/background.jpg')">
+<div class="head d-flex" style="background:linear-gradient(#0099FF,#B4D8E8); height=20px " >
+	<div class="img p-2"><img src="{{ url_for('static',filename='images/ico hospital.png') }}" width="80" height="50px"/></div>
+    {% if current_user.is_authenticated %}
+       <div>
+            <input type="button" value="Đăng xuất" class="btn btn-danger">
+       </div>
+    {% else %}
+        <div class="p-2" style="height=20px">
+            <ul>
+                <li class="flex-row-reverse" ><a href="{{ url_for('login_admin') }}">Đăng Nhập</a></li>
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+
+
+<ul class="menu list-group list-group-horizontal d-flex nav nav-tabs" role="tablist" style="background:#0099FF">
+    <li><i class="fas fa-home text-dark"></i></li>
+    <li ><a class="nav-link text-dark" href="{{ url_for('index') }}">Trang Chủ</a></li>
+    <li class=" nav-item"><a class="nav-link text-dark" href="{{ url_for('BenhNhan') }}">Bệnh Nhân</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('DonThuoc') }}">Đơn Thuốc</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('HoaDon') }}">Hóa Đơn</a></li>
+    <li class="nav-item"><a a class="nav-link text-dark" href="{{ url_for('Thuoc') }}">Thuốc</a></li>
+    <li class="nav-item dropdown">
+        <a data-toggle="dropdown" class="nav-link dropdown-toggle text-dark" >Báo Cáo</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{ url_for('ds_kham') }}">Danh sách khám bệnh</a>
+          <a class="dropdown-item" href="{{ url_for('BaoCao') }}">Doanh thu</a>
+        </div>
+    </li>
+    <li class="nav-item flex-grow-1"></li>
+</ul>
+
+<div class="d-flex bd-highlight">
+    <div class="p-2 border w-20 bd-highlight" style="width:20%">
+        <a href="#">Tất cả</a>
+    </div>
+    <div class="p-2 flex-grow-1 border bd-highlight" style="width:70%">
+        <h2 class="text-center text-primary">ĐƠN THUỐC</h2>
+        {% if err_msg %}
+            <div class="alert alert-success">
+                <h2>{{ err_msg }}</h2>
+            </div>
+        {% endif %}
+        <div>
+                <form action="{{ url_for('DonThuoc') }}" method="post">
+                    <div class="float-left" style="margin-right:100px">
+                            <label for="maPK">Mã phiếu khám</label>
+                            <input type="text" id="maPK" name="maPK" class="form-control-sm">
+                    </div>
+                    <div class="float-none" style="margin-right:100px">
+                            <label for="maDT">Mã đơn thuốc</label>
+                            <input type="text" id="maDT" name="maDT" class="form-control-sm">
+                    </div>
+                    <div>
+                        <div class="float-left" style="margin-right:100px">
+                            <label for="maBN">Mã bệnh nhân</label>
+                            <input type="text" id="maBN" name="maBN" class="form-control-sm">
+                        </div>
+
+                        <div class="float-none " >
+                            <label for="name">Họ Tên</label>
+                            <input type="text" id="name" name="name" class="form-control-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="float-left" style="margin-right:50px">
+                            <label for="ngaysinh">Năm sinh</label>
+                            <input type="date" id="ngaysinh" name="ngaysinh" class="form-control-sm">
+                        </div>
+                        <div class="float-none">
+                            <label for="sex">Giới Tính</label>
+                            <select name="sex" class="custom-select-sm" id="sex" >
+                                <option selected>Giới tính</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                                <option value="Khác">Khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Triệu chứng</label>
+                        <input type="text" class="form-control" id="trieuchung" name="trieuchung" >
+                    </div>
+                    <div>
+                        <label>Chẩn đoán loại bệnh</label>
+                        <input type="text" class="form-control" id="chandoan" name="chandoan">
+                    </div>
+                    <div >
+                        <label><input onclick="myFunction" type="checkbox" id="check"> Dùng thuốc</label>
+                    </div>
+                    <div id="table">
+                    <table class="table table-bordered" id="myTable">
+                        <tr>
+                            <th>STT</th>
+                            <th>Thuốc</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Vị</th>
+                            <th colspan="2">Cách dùng</th>
+                        </tr>
+                        {% for i in 'row' %}
+                        <tr>
+                            <td ></td>
+                            <td> <input type="text" placeholder="Tên thuốc" id="tenthuoc" name="tenthuoc" class="form-control-sm"> </td>
+                            <td> <input type="text" placeholder="Số lượng" id="soluong" name="soluong" class="form-control-sm"></td>
+                            <td> <input type="text" placeholder="Đơn vị" id="donvi" name="donvi" class="form-control-sm"> </td>
+                            <td> <input type="text" placeholder="cách dùng" id="cachdung" name="cachdung" class="form-control-sm"></td>
+                            <td><button onclick="DelRow(this)" class="fas fa-minus-circle btn btn-danger"></button></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <label>Lời dặn</label>
+                            <textarea name="description" cols="50" rows="1"></textarea>
+                        </div>
+                        <div class="float-right">
+                            <p></p>
+                            <p class="text-center" style="margin-right:40px">BÁC SĨ</p>
+                            <input type="text" style="margin-right:50px" id="bacsi" name="bacsi" class="form-control-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <input type="submit" value="Save" class="btn-success">
+                        <input type="reset" value="Reset" class="btn-danger">
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+        <p>Phòng Khám Mạch &copy; 2020</p>
+</div>
+</body>
+</html>

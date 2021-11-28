@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bệnh Nhân</title>
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet"/>
+    <link href="fontawesome-free-5.9.0-web/css/all.min.css" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body style="background-image:url('static/images/background.jpg')">
+<div class="head d-flex" style="background:linear-gradient(#0099FF,#B4D8E8); height=20px " >
+	<div class="img p-2"><img src="{{ url_for('static',filename='images/ico hospital.png') }}" width="80" height="50px"/></div>
+    {% if current_user.is_authenticated %}
+        <div>
+          <input type="button" value="Đăng xuất" class="btn btn-danger">
+        </div>
+    {% else %}
+        <div class="p-2" style="height=20px">
+            <ul>
+                <li class="flex-row-reverse" ><a href="{{ url_for('login_admin') }}">Đăng Nhập</a></li>
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+
+
+<ul class="menu list-group list-group-horizontal d-flex nav nav-tabs" role="tablist" style="background:#0099FF">
+    <li><i class="fas fa-home text-dark"></i></li>
+    <li ><a class="nav-link text-dark" href="{{ url_for('index') }}">Trang Chủ</a></li>
+    <li class=" nav-item"><a class="nav-link text-dark" href="{{ url_for('BenhNhan') }}">Bệnh Nhân</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('DonThuoc') }}">Đơn Thuốc</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('HoaDon') }}">Hóa Đơn</a></li>
+    <li class="nav-item"><a a class="nav-link text-dark" href="{{ url_for('Thuoc') }}">Thuốc</a></li>
+    <li class="nav-item dropdown">
+        <a data-toggle="dropdown" class="nav-link dropdown-toggle text-dark" >Báo Cáo</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{ url_for('ds_kham') }}">Danh sách khám bệnh</a>
+          <a class="dropdown-item" href="{{ url_for('BaoCao') }}">Doanh thu</a>
+        </div>
+    </li>
+    <li class="nav-item flex-grow-1"></li>
+</ul>
+<!--nội dung-->
+
+<div>
+    <div action="{{ url_for('BenhNhan') }}" methods="POST" class="find">
+        <form class="d-inline-flex">
+            <div class="col-md-6 form-group p-2">
+                <input class="form-control"
+                       name="name"
+                       placeholder="Nhập tên bệnh nhân" />
+            </div>
+            <div class="col-md-6 form-group p-2" >
+                <input type="date"
+                       name="Birth"
+                       class="form-control"
+                       placeholder="Ngày Sinh" />
+            </div>
+            <div class="form-group p-2">
+                <input type="submit" value="Tìm kiếm" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+
+    <div >
+        <a href="{{ url_for('Them') }}"><button type="button" class="btn btn-primary" >+ Thêm</button></a>
+    </div>
+
+    <div class="d-flex bd-highlight" action="{{ url_for('BenhNhan') }}" methods="POST" style="height:100%">
+        <div class="p-2 border w-20 bd-highlight" style="width:10%">
+            <a href="#">Tất cả</a>
+        </div>
+        <div class="p-2 flex-grow-1 border bd-highlight" style="width:75%">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Mã BN</th>
+                    <th>Họ Tên</th>
+                    <th>Giới Tính</th>
+                    <th>Ngày Sinh</th>
+                    <th>Địa Chỉ</th>
+                    <th>Phone</th>
+                    <th>Ngày lập</th>
+                    <th></th>
+                </tr>
+                {% for p in benhnhan  %}
+                <tr>
+                    <td> {{ p.maBN }} </td>
+                    <td>
+                        <a href="#">{{ p.name }}</a>
+                    </td>
+                    <td> {{ p.sex }} </td>
+                    <td> {{ p.ngaySinh }}</td>
+                    <td> {{ p.diaChi }} </td>
+                    <td> {{ p.phone }} </td>
+                    <td> {{ p.ngaykham }} </td>
+                    <td>
+                        <a href="#"><i class="fas fa-trash"></i> </a>
+                    </td>
+                </tr>
+                {% if err %}
+                    <tr>
+                        <td colspan="7">{{ err }}</td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<div class="footer">
+        <p>Phòng Khám Mạch &copy; 2020</p>
+</div>
+</body>
+</html>

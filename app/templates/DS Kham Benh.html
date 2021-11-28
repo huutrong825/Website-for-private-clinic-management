@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Bệnh Nhân</title>
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet"/>
+    <link href="fontawesome-free-5.9.0-web/css/all.min.css" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body style="background-image:url('static/images/background.jpg')">
+<div class="head d-flex" style="background:linear-gradient(#0099FF,#B4D8E8); height=20px " >
+	<div class="img p-2"><img src="{{ url_for('static',filename='images/ico hospital.png') }}" width="80" height="50px"/></div>
+    {% if current_user.is_authenticated %}
+        <div>
+             <input type="button" value="Đăng xuất" class="btn btn-danger">
+        </div>
+    {% else %}
+        <div class="p-2" style="height=20px">
+            <ul>
+                <li class="flex-row-reverse" ><a href="{{ url_for('login_admin') }}">Đăng Nhập</a></li>
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+
+
+
+<ul class="menu list-group list-group-horizontal d-flex nav nav-tabs" role="tablist" style="background:#0099FF">
+    <li><i class="fas fa-home text-dark"></i></li>
+    <li ><a class="nav-link text-dark" href="{{ url_for('index') }}">Trang Chủ</a></li>
+    <li class=" nav-item"><a class="nav-link text-dark" href="{{ url_for('BenhNhan') }}">Bệnh Nhân</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('DonThuoc') }}">Đơn Thuốc</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('HoaDon') }}">Hóa Đơn</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" href="{{ url_for('Thuoc') }}">Thuốc</a></li>
+    <li class="nav-item dropdown">
+        <a data-toggle="dropdown" class="nav-link dropdown-toggle text-dark" >Báo Cáo</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{ url_for('ds_kham') }}">Danh sách khám bệnh</a>
+          <a class="dropdown-item" href="{{ url_for('BaoCao') }}">Doanh thu</a>
+        </div>
+    </li>
+    <li class="nav-item flex-grow-1"></li>
+</ul>
+<!--nội dung-->
+<div class="container">
+    <div action="{{ url_for('ds_kham') }}" methods="POST">
+        <div>
+            <form class="d-inline-flex ">
+                <div class="col-md form-group p-2" >
+                    <input type="date"
+                           name="ngay_kham"
+                           class="form-control"
+                           placeholder="Ngày Khám" />
+                </div>
+                <div class="form-group p-2">
+                    <input type="submit" value="Tìm kiếm" class="btn btn-danger" />
+                </div>
+            </form>
+        </div>
+        <div action="{{ url_for('ds_kham') }}" methods="POST">
+        <table class="table table-bordered">
+            <tr>
+                <th>STT</th>
+                <th>Họ Tên</th>
+                <th>Giới Tính</th>
+                <th>Ngày Sinh</th>
+                <th>Địa Chỉ</th>
+                <th>Điện Thoại</th>
+                <th>Chẩn Đoán</th>
+                <th>Điều trị</th>
+            </tr>
+            {% for p in ds  %}
+            <tr>
+                <td> {{ p.id }}</td>
+                <td> {{ p.name }}</td>
+                <td> {{ p.sex }} </td>
+                <td> {{ p.ngaySinh }}</td>
+                <td> {{ p.diaChi }} </td>
+                <td> {{ p.phone }} </td>
+                <td> {{ p.chanDoan }} </td>
+                <td> </td>
+            </tr>
+            {% endfor %}
+            {% if err_msg %}
+                <div class="alert alert-danger">
+                    <h5>{{ err_msg }}</h5>
+                </div>
+            {% endif %}
+        </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm bệnh nhân</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="{{ url_for('static',filename='css/Signup.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static',filename='image/ico hospital.png') }}" rel="shortcut icon "/>
+</head>
+<body style="background-image:url('static/images/background.jpg')">
+
+<div class="container">
+    <div >
+        <h1 class="text-center text-info">Thêm Bệnh Nhân</h1>
+    </div>
+    <form action="{{ url_for('Them') }}" method="post">
+        <div>
+            <h5>Thông tin bệnh nhân</h5>
+        </div>
+            <div STYLE="margin-left:30px;margin-right:20px" class="float-left">
+                <label for="MaBN">Mã bệnh nhân</label>
+                <input type="text" placeholder="Mã bệnh nhân" id="MaBN" name="MaBN" class="form-control-sm" required>
+            </div>
+            <div STYLE="margin-left:30px;margin-right:10px" class="float-left">
+                <label for="name">Họ Tên</label>
+                <input type="text" placeholder="Họ tên" id="name" name="name" class="form-control-sm" required>
+            </div>
+            <div class="" style="margin-right:50px" >
+                <label>Giới Tính</label>
+                <select name="sex" class="custom-select-sm" id="sex" required>
+                    <option selected>Giới tính</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+            <div class="float-left" STYLE="margin:25px">
+                <label>Ngày sinh:</label>
+                <input type="date" placeholder="Ngày sinh" id="ngaysinh" name="ngaysinh" class="form-control-sm" required>
+            </div>
+            <div class="float-none" STYLE="margin:25px">
+                <label>Phone</label>
+                <input type="text" placeholder="Phone" id="phone" name="phone" class="form-control-sm" required>
+            </div>
+            <div STYLE="margin:25px" class="form-group">
+                <label>Địa Chỉ</label>
+                <input type="text" placeholder="Địa chỉ" id="address" name="address"  class="form-control" required>
+            </div>
+            <div STYLE="margin:25px" class="form-group">
+                <label>Ngày lập</label>
+                <input type="date"  placeholder="Ngày lập" id="ngaylap" name="ngaylap" class="form-control-sm" required >
+            </div>
+            <div class="" STYLE="margin:25px" class="form-group">
+                <label>Chiều Cao</label>
+                <input type="text" placeholder="Chiều cao" id="chieucao" name="chieucao" class="form-control-sm">
+                <label>cm</label>
+            </div>
+            <div class="form-group" STYLE="margin:25px">
+                <label>Cân nặng</label>
+                <input type="text" placeholder="Cân nặng" id="cannang" name="cannang" class="form-control-sm">
+                <label>kg</label>
+            </div>
+            <div class="form-group" STYLE="margin:25px">
+                <label>Huyết áp: </label>
+                <input type="text" id="huyetap" name="huyetap" class="form-control-sm">
+                <label>mmHg</label>
+            </div>
+        <div>
+            <input type="submit" value="Thêm" class="btn btn-primary">
+            <input type="button" onclick="javascript:window.location='{{ url_for('BenhNhan') }}'" value="Cancle" class="btn btn-danger">
+        </div>
+    </form>
+</div>
+</body>

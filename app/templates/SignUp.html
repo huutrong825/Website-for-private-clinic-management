@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="{{ url_for('static',filename='css/Signup.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static',filename='image/ico hospital.png') }}" rel="shortcut icon "/>
+</head>
+<body style="background-image:url('static/images/background.jpg')">
+
+<div class="container">
+    <h1 class="text-center text-danger">ĐĂNG KÝ</h1>
+    {% if err_msg %}
+    <div class="alert alert-danger">
+        <h2>{{ err_msg }}</h2>
+    </div>
+    {% endif %}
+    <form action="{{ url_for('SignUp') }}" method="post">
+        <div class="form-group ">
+            <label for="name">Họ tên</label>
+            <input type="text" id="name" placeholder="Nhập tên" name="name" class="form-control" required/>
+        </div>
+        <div class="form-group ">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control " required/>
+        </div>
+        <div class="form-group ">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Nhập tên người dùng" name="username" class="form-control " unique/>
+        </div>
+        <div class="form-group ">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Nhập mật khẩu mới" name="password" class="form-control " required/>
+        </div>
+        <div class="form-group ">
+            <label for="confirm">Confirm</label>
+            <input type="password" placeholder="Nhập lại mật khẩu" name="confirm" id="confirm" class="form-control " required/>
+        </div>
+        <div>
+            <input type="submit" value="Đăng ký" class="btn btn-primary" required />
+            <input type="button" onclick="javascript:window.location='{{ url_for('login_admin') }}'" value="Cancle" class="btn btn-danger">
+        </div>
+    </form>
+</div>
+</body>
